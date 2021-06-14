@@ -1,0 +1,21 @@
+# Backend terraform configuration: store tfstate in S3
+# https://www.terraform.io/docs/language/settings/backends/s3.html
+
+# Edit this file:
+#   - bucket must be the bucket created to store the Terraform state
+#   - key is a path in the bucket, you should include the deployment or environment in this path
+# Copy this file to the directories from which you deploy terraform
+#
+# If you don't copy this file Terraform with use a local tfstate file
+# (not recommended for production)
+
+terraform {
+  backend "s3" {
+    bucket  = "<terraform state bucket name>"
+    key     = "<terraform/tfstate/deployment/test>"
+    region  = "eu-west-2"
+    # profile = "<aws profile>"
+    # Parameters can also be passed on the command line, e.g.
+    # -backend-config="profile=<AWS-profile-name>"
+  }
+}
