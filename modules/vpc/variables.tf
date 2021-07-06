@@ -17,7 +17,7 @@ variable "subnet-cidr" {
 
 variable "ssh-in-cidr" {
   type        = string
-  default     = "127.0.0.1/8"
+  default     = "127.0.0.1/32"
   description = "Allow inbound SSH from this CIDR"
 }
 
