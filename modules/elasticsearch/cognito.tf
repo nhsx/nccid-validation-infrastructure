@@ -53,23 +53,33 @@ resource "aws_cognito_user_pool_domain" "user_pool" {
 }
 
 resource "aws_iam_role" "kibana_cognito_role" {
-  name               = "${var.name}-kibana"
-  path               = "/terraform/"
-  assume_role_policy = data.aws_iam_policy_document.elasticsearch_cognito_trust_policy_doc.json
+  name                = "${var.name}-kibana"
+  path                = "/terraform/"
+  assume_role_policy  = data.aws_iam_policy_document.elasticsearch_cognito_trust_policy_doc.json
+  managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonESCognitoAccess"]
 }
 
-resource "aws_iam_role_policy_attachment" "kibana_cognito_role_policy" {
-  role       = aws_iam_role.kibana_cognito_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonESCognitoAccess"
-}
+# https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-ac.html
 
-data "aws_iam_policy_document" "cognito_auth_policy_doc" {
+data "aws_iam_policy_document" "cognito_auth_admin_policy_doc" {
   statement {
     effect = "Allow"
     actions = [
       "cognito-sync:*",
       "cognito-identity:*",
       "es:ESHttp*"
+    ]
+    resources = ["${aws_elasticsearch_domain.es.arn}/*"]
+  }
+}
+
+data "aws_iam_policy_document" "cognito_auth_readonly_policy_doc" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "cognito-sync:*",
+      "cognito-identity:*",
+      "es:ESHttpGet"
     ]
     resources = ["${aws_elasticsearch_domain.es.arn}/*"]
   }
@@ -104,31 +114,32 @@ data "aws_iam_policy_document" "cognito_auth_trust_relationship_policy_doc" {
   }
 }
 
-resource "aws_iam_policy" "cognito_auth_policy" {
-  name        = var.name
-  path        = "/terraform/"
-  description = "Authorization policy for kibana cognito identity pool"
-
-  policy = data.aws_iam_policy_document.cognito_auth_policy_doc.json
-
-}
-
-resource "aws_iam_role" "cognito_auth_role" {
-  name = "${var.name}-cognito"
+resource "aws_iam_role" "cognito_auth_admin_role" {
+  name = "${var.name}-cognito-admin"
   path = "/terraform/"
 
   assume_role_policy = data.aws_iam_policy_document.cognito_auth_trust_relationship_policy_doc.json
+  inline_policy {
+    name   = "${var.name}-cognito-admin-policy"
+    policy = data.aws_iam_policy_document.cognito_auth_admin_policy_doc.json
+  }
 }
 
-resource "aws_iam_role_policy_attachment" "cognito_auth_role_policy" {
-  role       = aws_iam_role.cognito_auth_role.name
-  policy_arn = aws_iam_policy.cognito_auth_policy.arn
+resource "aws_iam_role" "cognito_auth_readonly_role" {
+  name = "${var.name}-cognito-readonly"
+  path = "/terraform/"
+
+  assume_role_policy = data.aws_iam_policy_document.cognito_auth_trust_relationship_policy_doc.json
+  inline_policy {
+    name   = "${var.name}-cognito-readonly-policy"
+    policy = data.aws_iam_policy_document.cognito_auth_readonly_policy_doc.json
+  }
 }
 
 resource "aws_cognito_identity_pool_roles_attachment" "identity_pool" {
   identity_pool_id = aws_cognito_identity_pool.kibana_identity_pool.id
 
   roles = {
-    "authenticated" = aws_iam_role.cognito_auth_role.arn
+    "authenticated" = var.kibana-readonly ? aws_iam_role.cognito_auth_readonly_role.arn : aws_iam_role.cognito_auth_admin_role.arn
   }
 }

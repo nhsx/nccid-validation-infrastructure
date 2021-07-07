@@ -56,10 +56,6 @@ resource "aws_elasticsearch_domain" "es" {
     identity_pool_id = aws_cognito_identity_pool.kibana_identity_pool.id
     role_arn         = aws_iam_role.kibana_cognito_role.arn
   }
-
-  depends_on = [
-    aws_iam_role_policy_attachment.kibana_cognito_role_policy
-  ]
 }
 
 resource "aws_elasticsearch_domain_policy" "es-policy" {
@@ -74,7 +70,8 @@ data "aws_iam_policy_document" "es-access-policy-doc" {
     principals {
       type = "AWS"
       identifiers = [
-        aws_iam_role.cognito_auth_role.arn,
+        aws_iam_role.cognito_auth_admin_role.arn,
+        aws_iam_role.cognito_auth_readonly_role.arn,
         aws_iam_role.kibana_cognito_role.arn
       ]
     }
