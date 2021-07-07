@@ -100,8 +100,11 @@ resource "aws_security_group" "sg" {
 data "aws_iam_policy_document" "cloudwatch-logs-policy" {
   statement {
     actions = [
+      "logs:CreateLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents"
+      "logs:PutLogEvents",
+      "logs:DescribeLogGroups",
+      "logs:DescribeLogStreams"
     ]
     resources = ["*"]
     effect    = "Allow"
