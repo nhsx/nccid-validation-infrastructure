@@ -44,9 +44,18 @@ build {
     destination = "/opt/ami-setup/setup.sh"
     source      = "./setup.sh"
   }
+  provisioner "file" {
+    destination = "/opt/ami-setup/user-setup.sh"
+    source      = "./user-setup.sh"
+  }
+  provisioner "file" {
+    destination = "/opt/ami-setup/Mambaforge-4.10.3-2-Linux-x86_64.sh.sha256"
+    source      = "./Mambaforge-4.10.3-2-Linux-x86_64.sh.sha256"
+  }
   provisioner "shell" {
     inline = [
       "sudo /opt/ami-setup/setup.sh",
+      "/opt/ami-setup/user-setup.sh",
       "echo '${var.ami_name} {{isotime}}' > /opt/ami-setup/build.txt"
     ]
   }

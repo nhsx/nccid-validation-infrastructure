@@ -14,7 +14,10 @@ wget -q https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amaz
 dpkg -i -E ./amazon-cloudwatch-agent.deb
 
 apt-get update -q
-apt-get install -y -q auditd unzip
+apt-get install -y -q \
+    auditd \
+    fuse \
+    unzip
 # apt-get upgrade -y -q
 
 cat << EOF > /etc/audit/rules.d/commands.rules
@@ -34,3 +37,8 @@ sudo ./aws/install
 # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/create-cloudwatch-agent-configuration-file-wizard.html
 # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Agent-Configuration-File-Details.html
 /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:amazon-cloudwatch-agent.json
+
+# S3 filesystem mount
+curl -sfLO https://github.com/kahing/goofys/releases/download/v0.24.0/goofys
+chmod a+x goofys
+mv goofys /usr/local/bin/
