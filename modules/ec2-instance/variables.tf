@@ -46,13 +46,3 @@ variable "instance-role-policies" {
   default     = []
   description = "ARNs of additional IAM policies to add to the instance"
 }
-
-# variable "input-bucket-name" {
-#   type        = string
-#   description = "Input bucket name"
-# }
-
-# variable "output-bucket-name" {
-#   type        = string
-#   description = "Output bucket name"
-# }

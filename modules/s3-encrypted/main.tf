@@ -81,9 +81,23 @@ resource "aws_s3_bucket" "bucket" {
       }
     }
   }
-  #   versioning {
-  #     enabled =
-  #   }
+
+  versioning {
+    enabled = true
+  }
+
+  lifecycle_rule {
+    id                                     = "Delete old versions of objects"
+    enabled                                = true
+    abort_incomplete_multipart_upload_days = var.old_version_expiry_days
+    expiration {
+      expired_object_delete_marker = true
+    }
+    noncurrent_version_expiration {
+      days = var.old_version_expiry_days
+    }
+  }
+
   #   logging = {
   #     target_bucket =
   #     target_prefix =
