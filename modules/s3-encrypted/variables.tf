@@ -21,7 +21,7 @@ variable "bucket-admin-principals" {
   description = "List of AWS Principals with bucket admin access"
 }
 
-variable "old_version_expiry_days" {
+variable "old-version-expiry-days" {
   type        = number
   default     = 366
   description = "Delete old versions after this many days"

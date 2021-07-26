@@ -89,12 +89,12 @@ resource "aws_s3_bucket" "bucket" {
   lifecycle_rule {
     id                                     = "Delete old versions of objects"
     enabled                                = true
-    abort_incomplete_multipart_upload_days = var.old_version_expiry_days
+    abort_incomplete_multipart_upload_days = var.old-version-expiry-days
     expiration {
       expired_object_delete_marker = true
     }
     noncurrent_version_expiration {
-      days = var.old_version_expiry_days
+      days = var.old-version-expiry-days
     }
   }
 
