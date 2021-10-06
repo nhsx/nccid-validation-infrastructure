@@ -7,10 +7,10 @@ Based on https://learn.hashicorp.com/tutorials/terraform/aws-build
 See [./backend-setup](./backend-setup)
 
 ## Building AMIs
-If you want to build a custom Ubuntu 18.04 AMI with the AWS CludWatch agent and auditd:
+If you want to build a custom Ubuntu or Windows AMI with the AWS CloudWatch agent and other utilities:
 1. Check the AWS tenancy has a default public VPC, if it doesn't [create it in the AWS console](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc)
-1. `cd packer-templates/ubuntu-1804`
-1. `packer build ubuntu-1804.pkr.hcl`
+1. `cd packer-templates/ubuntu-1804` or `packer-templates/windows-2019`
+1. `packer build ubuntu-1804.pkr.hcl` or `windows-2019.pkr.hcl`
 
 ## Deploying infrastructure
 1. Install Terraform (last tested with version `0.15.4`)
@@ -23,7 +23,7 @@ If you want to build a custom Ubuntu 18.04 AMI with the AWS CludWatch agent and 
 1. Complete the manual post-deployment steps
 
 ## Manual post-deployment steps
-- Setup Elasticsearch auenthication
+- Setup Elasticsearch authentication
    1. Follow the manual instructions in [`modules/elasticsearch/README.md`](modules/elasticsearch/README.md).
    1. Go to the AWS Cognito service
    1. Under `User Pools` open the user pool, go to `General settings` → `Users and groups`
