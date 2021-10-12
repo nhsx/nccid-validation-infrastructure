@@ -15,10 +15,16 @@ variable "subnet-cidr" {
   description = "VPC CIDR"
 }
 
-variable "ssh-in-cidr" {
-  type        = string
-  default     = "127.0.0.1/32"
-  description = "Allow inbound SSH from this CIDR"
+variable "external-in-cidrs" {
+  type        = list(string)
+  default     = ["127.0.0.1/32"]
+  description = "Allow inbound traffic from these CIDRs to `external-in-port`"
+}
+
+variable "external-in-port" {
+  type        = number
+  default     = 22
+  description = "Allow inbound traffic from `external-in-cidrs` to this port"
 }
 
 variable "public-vpc" {

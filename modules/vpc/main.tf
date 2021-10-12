@@ -58,16 +58,16 @@ resource "aws_route" "gw-route" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
 resource "aws_security_group" "sg" {
   name        = "${var.name}-sg"
-  description = "Allow inbound SSH and all outbound"
+  description = "Allow inbound ${var.external-in-port} and all outbound"
   vpc_id      = aws_vpc.vpc.id
 
   ingress = [
     {
-      description      = "SSH from "
+      description      = "Incoming tcp ${var.external-in-port}"
       protocol         = "tcp"
-      from_port        = 22
-      to_port          = 22
-      cidr_blocks      = [var.ssh-in-cidr]
+      from_port        = var.external-in-port
+      to_port          = var.external-in-port
+      cidr_blocks      = var.external-in-cidrs
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
       security_groups  = []
