@@ -27,7 +27,7 @@ build {
 
   provisioner "file" {
     destination = "/opt/ami-setup/amazon-cloudwatch-agent.json"
-    source      = "./amazon-cloudwatch-agent.json"
+    source      = "../ubuntu-common/amazon-cloudwatch-agent.json"
   }
   provisioner "shell" {
     inline = [

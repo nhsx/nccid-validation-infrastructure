@@ -9,15 +9,15 @@ See [./backend-setup](./backend-setup)
 ## Building AMIs
 If you want to build a custom Ubuntu or Windows AMI with the AWS CloudWatch agent and other utilities:
 1. Check the AWS tenancy has a default public VPC, if it doesn't [create it in the AWS console](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc)
-1. `cd packer-templates/ubuntu-1804` or `packer-templates/windows-2019`
-1. `packer build ubuntu-1804.pkr.hcl` or `windows-2019.pkr.hcl`
+1. `cd packer-templates/<image>`
+1. `packer build <image>.pkr.hcl`
 
 ## Deploying infrastructure
 1. Install Terraform (last tested with version `0.15.4`)
 1. TODO: copy modified generic tf files into `examples` or another directory, add example `input.tfvars`
 1. `cd examples`
 1. Initialise modules `terraform init`
-1. Upload or create an EC2 keypair
+1. Upload or create an EC2 keypair (e.g. `aws ec2 import-key-pair --key-name <key-name> --public-key-material fileb://~/.ssh/id_rsa.pub`)
 1. Run `terraform apply -var-file=path/to/input.tfvars`
    Set the `AWS_PROFILE` environment variable or other authentication environment variables if needed for the deployed infrastructure (note this AWS account may be different from the backend A3 TFState account)
 1. Complete the manual post-deployment steps

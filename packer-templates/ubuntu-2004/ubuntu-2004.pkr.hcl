@@ -1,6 +1,6 @@
 variable "ami_name" {
-  type = string
-  default = "nccidav-ubuntu-1804-auditd-{{timestamp}}"
+  type    = string
+  default = "nccidav-ubuntu-2004-auditd-{{timestamp}}"
 }
 
 variable "region" {
@@ -9,14 +9,14 @@ variable "region" {
 }
 
 # https://www.packer.io/docs/builders/amazon/ebs
-source "amazon-ebs" "ubuntu1804" {
+source "amazon-ebs" "ubuntu2004" {
   ami_name      = "${var.ami_name}"
   instance_type = "t3.micro"
   region        = "${var.region}"
   source_ami_filter {
     filters = {
-      name = "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server*"
-      root-device-type = "ebs"
+      name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server*"
+      root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
@@ -28,7 +28,7 @@ source "amazon-ebs" "ubuntu1804" {
 
 # https://www.packer.io/docs/provisioners
 build {
-  sources = ["source.amazon-ebs.ubuntu1804"]
+  sources = ["source.amazon-ebs.ubuntu2004"]
 
   provisioner "shell" {
     inline = [

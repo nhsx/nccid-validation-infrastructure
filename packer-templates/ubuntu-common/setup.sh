@@ -16,9 +16,13 @@ dpkg -i -E ./amazon-cloudwatch-agent.deb
 apt-get update -q
 apt-get install -y -q \
     auditd \
+    docker-compose \
+    docker.io \
     fuse \
     unzip
 # apt-get upgrade -y -q
+
+usermod -aG docker ubuntu
 
 cat << EOF > /etc/audit/rules.d/commands.rules
 -a exit,always -S execve
