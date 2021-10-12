@@ -38,22 +38,25 @@ build {
   }
   provisioner "file" {
     destination = "/opt/ami-setup/amazon-cloudwatch-agent.json"
-    source      = "./amazon-cloudwatch-agent.json"
+    source      = "../ubuntu-common/amazon-cloudwatch-agent.json"
   }
   provisioner "file" {
     destination = "/opt/ami-setup/setup.sh"
-    source      = "./setup.sh"
+    source      = "../ubuntu-common/setup.sh"
   }
   provisioner "file" {
     destination = "/opt/ami-setup/user-setup.sh"
-    source      = "./user-setup.sh"
+    source      = "../ubuntu-common/user-setup.sh"
   }
   provisioner "file" {
-    destination = "/opt/ami-setup/Mambaforge-4.10.3-2-Linux-x86_64.sh.sha256"
-    source      = "./Mambaforge-4.10.3-2-Linux-x86_64.sh.sha256"
+    destination = "/opt/ami-setup/Mambaforge-4.10.3-6-Linux-x86_64.sh.sha256"
+    source      = "../ubuntu-common/Mambaforge-4.10.3-6-Linux-x86_64.sh.sha256"
   }
   provisioner "shell" {
     inline = [
+      # https://github.com/hashicorp/packer/issues/2639
+      # https://serverfault.com/a/969598
+      "/usr/bin/cloud-init status --wait",
       "sudo /opt/ami-setup/setup.sh",
       "/opt/ami-setup/user-setup.sh",
       "echo '${var.ami_name} {{isotime}}' > /opt/ami-setup/build.txt"

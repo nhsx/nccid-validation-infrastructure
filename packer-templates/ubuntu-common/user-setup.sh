@@ -5,8 +5,9 @@ SETUPDIR=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 cd "$SETUPDIR"
 
 # Mambaforge and Minimal Snakemake
-INSTALLER=Mambaforge-4.10.3-2-Linux-x86_64.sh
-curl -sfLO https://github.com/conda-forge/miniforge/releases/download/4.10.3-2/$INSTALLER
+VERSION=4.10.3-6
+INSTALLER=Mambaforge-$VERSION-Linux-x86_64.sh
+curl -sfLO https://github.com/conda-forge/miniforge/releases/download/$VERSION/$INSTALLER
 sha256sum -c $INSTALLER.sha256
 sh $INSTALLER -b
 
