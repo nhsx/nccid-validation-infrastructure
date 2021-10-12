@@ -11,5 +11,7 @@ sha256sum -c $INSTALLER.sha256
 sh $INSTALLER -b
 
 ~/mambaforge/bin/mamba init bash
-~/mambaforge/bin/mamba create -y -q -n runtime -c bioconda snakemake-minimal
+~/mambaforge/bin/mamba create -y -q -n runtime -c bioconda \
+    boto3 \
+    snakemake-minimal
 ~/mambaforge/envs/runtime/bin/snakemake --version
