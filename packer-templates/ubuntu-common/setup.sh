@@ -22,7 +22,7 @@ apt-get install -y -q \
     unzip
 # apt-get upgrade -y -q
 
-usermod -aG docker $USER
+usermod -aG docker ubuntu
 
 cat << EOF > /etc/audit/rules.d/commands.rules
 -a exit,always -S execve
