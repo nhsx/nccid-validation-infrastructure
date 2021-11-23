@@ -14,5 +14,9 @@ sh $INSTALLER -b
 ~/mambaforge/bin/mamba init bash
 ~/mambaforge/bin/mamba create -y -q -n runtime -c bioconda \
     boto3 \
-    snakemake-minimal
+    jupyterlab \
+    matplotlib \
+    pandas \
+    pydicom \
+    snakemake
 ~/mambaforge/envs/runtime/bin/snakemake --version

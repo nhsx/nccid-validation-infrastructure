@@ -16,6 +16,7 @@ dpkg -i -E ./amazon-cloudwatch-agent.deb
 apt-get update -q
 apt-get install -y -q \
     auditd \
+    dcmtk \
     docker-compose \
     docker.io \
     fuse \
