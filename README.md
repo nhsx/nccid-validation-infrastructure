@@ -76,3 +76,6 @@ Private EC2 instance:
 ElasticSearch
 1. Log into Kibana
 1. Under discover data check there are logs corresponding to the command you ran on the instances.
+
+## Running a validation
+See [running.md](./running.md) for an example of how to use this infrastructure to run a validation.
