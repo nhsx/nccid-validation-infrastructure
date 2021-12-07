@@ -13,9 +13,8 @@ If you want to build a custom Ubuntu or Windows AMI with the AWS CloudWatch agen
 1. `packer build <image>.pkr.hcl`
 
 ## Deploying infrastructure
-1. Install Terraform (last tested with version `0.15.4`)
-1. TODO: copy modified generic tf files into `examples` or another directory, add example `input.tfvars`
-1. `cd examples`
+1. Install Terraform (last tested with version `1.0.2`)
+1. Rename and edit `example.tf`
 1. Initialise modules `terraform init`
 1. Upload or create an EC2 keypair (e.g. `aws ec2 import-key-pair --key-name <key-name> --public-key-material fileb://~/.ssh/id_rsa.pub`)
 1. Run `terraform apply -var-file=path/to/input.tfvars`
@@ -39,7 +38,7 @@ If you want to build a custom Ubuntu or Windows AMI with the AWS CloudWatch agen
    1. Scroll to the bottom and click `Start streaming`.
    1. Wait for the banner at the top to show it's ready
 - Setup ElasticSearch indexes
-   1. Go o the Kibana URL output when you ran terraform
+   1. Go to the Kibana URL output when you ran terraform
    1. Login with the Cognito account you created
    1. Go to `Kibana` → `Add your data` → `Create index pattern`
    1. Index pattern name: enter `cwl-*`
