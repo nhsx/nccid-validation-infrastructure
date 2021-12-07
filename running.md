@@ -16,8 +16,9 @@
 6. Refine script if necessary
 7. Collect predictions and logs from synthetic dataset model
 8. Check expected logs were sent to CloudWatch and ELK (remember only execution/auditd logs should be present in ELK)
-9. Send model outputs and logs to vendor for review
-10. When vendor is happy create AMI
+9. Review output logs for sensitive identifiers, for example using [`tools/check_logs.ipynb`](./tools/check_logs.ipynb) as a base
+10. Send model outputs and logs to vendor for review
+11. When vendor is happy create AMI
 
 ## Validation run
 
