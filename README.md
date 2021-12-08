@@ -1,4 +1,6 @@
-# AWS Terraform examples
+# NCCID validation AWS Terraform infrastructure
+
+Terraform infrastructure and procedures for deploying infrastructure on AWS for running an AI model validation study.
 
 ## Usage:
 Based on https://learn.hashicorp.com/tutorials/terraform/aws-build
