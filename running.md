@@ -10,7 +10,7 @@
 
 1. Install model: Either live with vendor, or without them if they’re happy to transfer model to use separately
 2. Create ELK account for vendor (can also be done later). Email them in advance with login URL, and to warn them to expect an anonymous email containing credentials (sent automatically by AWS Cognito).
-3. Test model on one synthetic image. If a local image is required for initial testing: `aws s3 cp s3://${var.name}-validation-input/synthetic-validation-data/xray/xxx.dcm`.
+3. Test model on one synthetic image. If a local image is required for initial testing: `aws s3 cp s3://${var.name}-validation-input/synthetic-validation-data/xray/xxx.dcm .`
 4. Adjust deployment until working
 5. Run model on full synthetic dataset using the script/snakemake/tool that will be used in production
 6. Refine script if necessary
